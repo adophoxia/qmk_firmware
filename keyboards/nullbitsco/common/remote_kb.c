@@ -27,6 +27,8 @@ This will require a new communication protocol, as the current one is limited.
 */
 
 #include "remote_kb.h"
+
+#if defined(__AVR_ATmega32U4__)
 #include "uart.h"
 
 uint8_t
@@ -39,14 +41,10 @@ bool
 // Private functions
 
 static bool vbus_detect(void) {
-  #if defined(__AVR_ATmega32U4__)
     //returns true if VBUS is present, false otherwise.
     USBCON |= (1 << OTGPADE); //enables VBUS pad
     _delay_us(10);
     return (USBSTA & (1<<VBUS));  //checks state of VBUS
-  #else
-    #error vbus_detect is not implemented for this architecure!
-  #endif
 }
 
 static uint8_t chksum8(const unsigned char *buf, size_t len) {
@@ -174,3 +172,11 @@ void matrix_scan_remote_kb(void) {
   }
   #endif
 }
+
+#else
+// No support on other platforms, yet
+// TODO: add RP2040 support
+void matrix_init_remote_kb(void) {}
+void process_record_remote_kb(uint16_t keycode, keyrecord_t *record) {}
+void matrix_scan_remote_kb(void) {}
+#endif

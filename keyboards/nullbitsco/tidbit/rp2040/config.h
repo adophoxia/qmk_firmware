@@ -13,25 +13,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "bitc_led.h"
+#pragma once
 
-void set_bitc_LED(uint8_t mode) {
-    switch(mode) {
-        case LED_ON:
-            setPinOutput(PIN_LED);
-            writePin(PIN_LED, GPIO_STATE_HIGH);
-        break;
+#include "config_common.h"
 
-        case LED_DIM:
-            setPinInput(PIN_LED);
-        break;
+/* key matrix pins */
+#define MATRIX_ROW_PINS { GP22, GP7, GP6, GP5, GP4 }
+#define MATRIX_COL_PINS { NO_PIN, NO_PIN, GP29, GP28, GP27, GP26 }
 
-        case LED_OFF:
-            setPinOutput(PIN_LED);
-            writePin(PIN_LED, GPIO_STATE_LOW);
-        break;
+/* Optional encoder pins */
+#ifdef OLED_ENABLE
+#define ENCODERS_PAD_A { GP23, GP8, NO_PIN, GP0 }
+#define ENCODERS_PAD_B { GP20, GP9, NO_PIN, GP1 }
+#else
+#define ENCODERS_PAD_A { GP23, GP8, GP2, GP0 }
+#define ENCODERS_PAD_B { GP20, GP9, GP3, GP1 }
+#endif
 
-        default:
-        break;
-    }
-}
+/* Optional SMT LED pins */
+#define RGB_DI_PIN GP21
+
+/* RP2040-specific defines*/
+#define RP2040_FLASH_W25X10CL
+#define I2C1_SDA_PIN GP2
+#define I2C1_SCL_PIN GP3
+#define I2C_DRIVER I2CD2

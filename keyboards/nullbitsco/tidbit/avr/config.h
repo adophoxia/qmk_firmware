@@ -15,21 +15,22 @@
  */
 #pragma once
 
-#include "quantum.h"
+#include "config_common.h"
 
-/* Optional big LED pins */
-#define BIG_LED_R_PIN D7
-#define BIG_LED_G_PIN C6
-#define BIG_LED_B_PIN D0
+/* Used to set remote for remote KB if VUSB detect doesn't work. */
+// #define KEYBOARD_REMOTE
 
-#define LED_ON          2
-#define LED_OFF         0
+// Workaround for freezing after MacOS sleep
+#define USB_SUSPEND_WAKEUP_DELAY 200
 
-#define GPIO_STATE_LOW  0
-#define GPIO_STATE_HIGH 1
+/* key matrix pins */
+#define MATRIX_ROW_PINS { B1, E6, D7, C6, D4 }
+#define MATRIX_COL_PINS { NO_PIN, NO_PIN, F4, F5, F6, F7 }
+#define UNUSED_PINS
 
-void
-  set_big_LED_rgb(uint8_t r_mode, uint8_t g_mode, uint8_t b_mode),
-  set_big_LED_r(uint8_t mode),
-  set_big_LED_g(uint8_t mode),
-  set_big_LED_b(uint8_t mode);
+/* Optional SMT LED pins */
+#define RGB_DI_PIN B6
+
+/* Optional encoder pins */
+#define ENCODERS_PAD_A { B2, B4, D0, D3 }
+#define ENCODERS_PAD_B { B3, B5, D1, D2 }

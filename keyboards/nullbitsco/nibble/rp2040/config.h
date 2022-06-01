@@ -15,15 +15,28 @@
  */
 #pragma once
 
-#include "quantum.h"
+#include "config_common.h"
 
-#define LED_ON          2
-#define LED_DIM         1
-#define LED_OFF         0
+/*
+ * Keyboard Matrix Assignments
+ * The nibble uses a demultiplexer for the cols.
+ * to free up more IOs for awesomeness!
+ * See matrix.c for more details.
+*/
+#define MATRIX_ROW_PINS { GP22, GP20, GP23, GP21, GP4 }
+#define MATRIX_COL_MUX_PINS { GP29, GP28, GP27, GP26 }
+#define MATRIX_COL_PINS { }
 
-#define GPIO_STATE_LOW  0
-#define GPIO_STATE_HIGH 1
+/* Optional SMT LED pins */
+#define RGB_DI_PIN GP7
 
-#define PIN_LED         F0
+/* Optional encoder pins */
+#define ENCODERS_PAD_A { GP9 }
+#define ENCODERS_PAD_B { GP8 }
 
-void set_bitc_LED(uint8_t mode);
+/* RP2040-specific defines*/
+// TODO: needed if using default config?
+#define RP2040_FLASH_W25X10CL
+#define I2C1_SDA_PIN GP2
+#define I2C1_SCL_PIN GP3
+#define I2C_DRIVER I2CD2

@@ -19,7 +19,7 @@
 
 #include "quantum.h"
 #include "common/remote_kb.h"
-#include "common/bitc_led.h"
+#include "common/nb_leds.h"
 
 #define LAYOUT( \
                       K01, K02, K03, \
