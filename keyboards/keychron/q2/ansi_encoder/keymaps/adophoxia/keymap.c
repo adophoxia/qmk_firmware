@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "adophoxia.h"
+#include "adophoxia_encoder.c"
 #include "indicators.c"
 
 
@@ -49,3 +50,4 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [WIN_MM]   = { ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
 };
 #endif
+

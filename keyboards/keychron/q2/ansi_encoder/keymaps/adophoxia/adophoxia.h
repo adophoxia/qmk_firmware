@@ -18,3 +18,10 @@ enum layers{
 /* Use 3 dynamic keymap layers */
 #undef DYNAMIC_KEYMAP_LAYER_COUNT
 #define DYNAMIC_KEYMAP_LAYER_COUNT 3
+
+// ENCODER ACTIONS
+#ifdef ENCODER_ENABLE
+    void encoder_action_volume(bool clockwise);
+    void encoder_action_mediatrack(bool clockwise);
+    void encoder_action_navpage(bool clockwise);
+#endif // ENCODER_ENABLE

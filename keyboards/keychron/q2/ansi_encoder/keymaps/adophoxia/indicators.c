@@ -65,6 +65,17 @@ void shift_indicators(){
     }
 };
 
+bool mediatrack_navpage_indicators(void) {
+    if (get_mods() & MOD_BIT(KC_LALT)){
+        rgb_matrix_set_color(64, RGB_WHITE);
+        rgb_matrix_set_color(66, RGB_WHITE);
+    } else if (get_mods() & MOD_BIT(KC_LSFT)) {
+        rgb_matrix_set_color(56, RGB_BLUE);
+        rgb_matrix_set_color(65, RGB_BLUE);
+    }
+    return false;
+}
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t layer = get_highest_layer(layer_state);
     if (get_highest_layer(layer_state) > 0) {
@@ -94,5 +105,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         shift_indicators();
         breathing_win_lock();
     }
+    mediatrack_navpage_indicators();
     return false;
 }
