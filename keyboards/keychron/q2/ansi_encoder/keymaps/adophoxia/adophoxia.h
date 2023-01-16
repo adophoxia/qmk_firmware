@@ -1,7 +1,10 @@
 #pragma once
 
 enum custom_keycodes {
-    KC_WLCK
+    KC_WLCK,
+    ENC_LFT,
+    ENC_RGT,
+    ENC_PRS
 };
 
 enum layers{
@@ -12,6 +15,7 @@ enum layers{
 
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
+
 #define TSK_EXP C(S(KC_ESC))
 #define KC_WLCK MAGIC_TOGGLE_GUI
 

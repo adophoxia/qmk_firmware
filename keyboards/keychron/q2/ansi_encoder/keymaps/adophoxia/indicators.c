@@ -47,7 +47,7 @@ void breathing_caps_lock(){
 
 // Lights up certain areas of the keyboard when L_SFT/R_SFT is held
 void shift_indicators(){
-    if (get_mods() & MOD_MASK_SHIFT){
+    if (get_mods() & MOD_BIT(KC_LSFT)){
         uint8_t i;
         for (i = 0; i < ARRAYSIZE(alphabets); i++){ // Lights up KC_A - KC_Z as PINK
             rgb_matrix_set_color(alphabets[i], RGB_PINK);
@@ -70,15 +70,15 @@ bool mediatrack_navpage_indicators(void) {
         rgb_matrix_set_color(64, RGB_WHITE);
         rgb_matrix_set_color(66, RGB_WHITE);
     } else if (get_mods() & MOD_BIT(KC_LSFT)) {
-        rgb_matrix_set_color(56, RGB_BLUE);
-        rgb_matrix_set_color(65, RGB_BLUE);
+        rgb_matrix_set_color(56, RGB_RED);
+        rgb_matrix_set_color(65, RGB_RED);
     }
     return false;
 }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t layer = get_highest_layer(layer_state);
-    if (get_highest_layer(layer_state) > 0) {
+    if (layer > 0) {
 
         for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
             for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
