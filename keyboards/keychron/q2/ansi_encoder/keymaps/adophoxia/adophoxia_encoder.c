@@ -20,7 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 uint8_t ctrl_pressed = false;
 uint8_t shift_pressed = false;
-uint8_t alt_pressed = false;
+uint8_t l_alt_pressed = false;
+uint8_t r_alt_pressed = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //uint8_t mods_state = get_mods() | get_weak_mods();
@@ -32,16 +33,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             shift_pressed = record->event.pressed;
             break;
         case KC_LALT:
-            alt_pressed = record->event.pressed;
+            l_alt_pressed = record->event.pressed;
+            break;
+        case KC_RALT:
+            r_alt_pressed = record->event.pressed;
             break;
         case ENC_PRS:
             if (record->event.pressed) {
-                if (get_highest_layer(layer_state) == WIN_BASE) {
-                    if (ctrl_pressed && shift_pressed && alt_pressed) {
+                switch(get_highest_layer(layer_state)) {
+                    case WIN_BASE:
+                        if (r_alt_pressed) {
+                            tap_code(KC_MUTE);
+                        } else {
+                            tap_code(KC_MPLY);
+                        }
+                        break;
+                    case WIN_FN:
+                        soft_reset_keyboard();
+                        break;
+                    case WIN_MM:
                         reset_keyboard();
-                    } else {
-                        tap_code(KC_MPLY);
-                    }
+                        break;
+                    default:
+                        break;
                 }
             }
             return false;
@@ -51,7 +65,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     case WIN_BASE: //Default Layer
                         if (shift_pressed) { // If you are holding R shift, Page up/dn
                             tap_code(KC_PGDN);
-                        } else if (alt_pressed) {  // if holding Left Alt, change media next/prev track
+                        } else if (l_alt_pressed) {  // if holding Left Alt, change media next/prev track
                             tap_code(KC_MPRV);
                         } else {
                             tap_code16_delay(KC_VOLD, 2);;       // Otherwise it just changes volume
@@ -60,7 +74,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     case WIN_MM: //RGB Control
                         if (shift_pressed) { // If you are holding R shift, Page up/dn
                             rgb_matrix_decrease_speed_noeeprom();
-                        } else if (alt_pressed) {  // if holding Left Alt, change media next/prev track
+                        } else if (l_alt_pressed) {  // if holding Left Alt, change media next/prev track
                             rgb_matrix_step_reverse_noeeprom();
                         } else if (ctrl_pressed){
                             rgb_matrix_decrease_hue_noeeprom();
@@ -81,7 +95,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     case WIN_BASE: //Default Layer
                         if (shift_pressed) { // If you are holding R shift, Page up/dn
                             tap_code(KC_PGUP);
-                        } else if (alt_pressed) {  // if holding Left Alt, change media next/prev track
+                        } else if (l_alt_pressed) {  // if holding Left Alt, change media next/prev track
                             tap_code(KC_MNXT);
                         } else {
                             tap_code16_delay(KC_VOLU, 2);;       // Otherwise it just changes volume
@@ -90,7 +104,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     case WIN_MM: //RGB Control
                         if (shift_pressed) { // If you are holding R shift, Page up/dn
                             rgb_matrix_increase_speed_noeeprom();
-                        } else if (alt_pressed) {  // if holding Left Alt, change media next/prev track
+                        } else if (l_alt_pressed) {  // if holding Left Alt, change media next/prev track
                             rgb_matrix_step_noeeprom();
                         } else if (ctrl_pressed){
                             rgb_matrix_increase_hue_noeeprom();
