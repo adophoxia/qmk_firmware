@@ -47,7 +47,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case ENC_LFT:
             if (record->event.pressed) {
-                switch(get_highest_layer(layer_state|default_layer_state)) {
+                switch(get_highest_layer(layer_state)) {
                     case WIN_BASE: //Default Layer
                         if (shift_pressed) { // If you are holding R shift, Page up/dn
                             tap_code(KC_PGDN);
@@ -59,15 +59,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         break;
                     case WIN_MM: //RGB Control
                         if (shift_pressed) { // If you are holding R shift, Page up/dn
-                            tap_code16(RGB_SPD);
+                            rgb_matrix_decrease_speed_noeeprom();
                         } else if (alt_pressed) {  // if holding Left Alt, change media next/prev track
-                            tap_code16(RGB_RMOD);
+                            rgb_matrix_step_reverse_noeeprom();
                         } else if (ctrl_pressed){
-                            tap_code16(RGB_HUD);
+                            rgb_matrix_decrease_hue_noeeprom();
                         } else if (ctrl_pressed && shift_pressed) {
-                            tap_code16(RGB_SAD);
+                            rgb_matrix_decrease_sat_noeeprom();
                         } else {
-                            tap_code16(RGB_VAD);       // Otherwise it just changes volume
+                            rgb_matrix_decrease_val_noeeprom();       // Otherwise it just changes volume
                         }
                         break;
                     default:
@@ -77,7 +77,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case ENC_RGT:
             if (record->event.pressed) {
-                switch(get_highest_layer(layer_state|default_layer_state)) {
+                switch(get_highest_layer(layer_state)) {
                     case WIN_BASE: //Default Layer
                         if (shift_pressed) { // If you are holding R shift, Page up/dn
                             tap_code(KC_PGUP);
@@ -89,15 +89,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         break;
                     case WIN_MM: //RGB Control
                         if (shift_pressed) { // If you are holding R shift, Page up/dn
-                            tap_code16(RGB_SPI);
+                            rgb_matrix_increase_speed_noeeprom();
                         } else if (alt_pressed) {  // if holding Left Alt, change media next/prev track
-                            tap_code16(RGB_MOD);
+                            rgb_matrix_step_noeeprom();
                         } else if (ctrl_pressed){
-                            tap_code16(RGB_HUI);
+                            rgb_matrix_increase_hue_noeeprom();
                         } else if (ctrl_pressed && shift_pressed) {
-                            tap_code16(RGB_SAI);
+                            rgb_matrix_increase_sat_noeeprom();
                         } else {
-                            tap_code16(RGB_VAI);       // Otherwise it just changes volume
+                            rgb_matrix_increase_val_noeeprom();       // Otherwise it just changes volume
                         }
                         break;
                     default:

@@ -26,21 +26,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,  KC_RBRC,  KC_BSLS,          KC_PGUP,
         KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,            KC_ENT,           KC_PGDN,
         KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT, KC_UP,
-        KC_LCTL, KC_LWIN, KC_LALT,                            KC_SPC,                             KC_RALT, TG(WIN_FN), TG(WIN_MM), KC_LEFT, KC_DOWN, KC_RGHT),
+        CTL_GRV, KC_LWIN, KC_LALT,                            KC_SPC,                             KC_RALT, TG(WIN_FN), TG(WIN_MM), KC_LEFT, KC_DOWN, KC_RGHT),
 
     [WIN_FN] = LAYOUT_ansi_67(
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12,   _______,          KC_MUTE,
         RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, _______, _______, _______, _______,  _______,  _______,          KC_HOME,
         _______, RGB_RMOD,RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, _______, _______, _______, _______,            _______,          KC_END,
         _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______,
-        TSK_EXP, KC_WLCK, _______,                            _______,                            _______, _______,  _______,  _______, _______, _______),
+        TSK_EXP, KC_WLCK, _______,                            _______,                            _______, KC_TRNS,  KC_TRNS,  _______, _______, _______),
 
     [WIN_MM] = LAYOUT_ansi_67(
         KC_TILD, KC_BRID, KC_BRIU, KC_TASK, KC_FLXP, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD,  KC_VOLU,  _______,          QK_BOOT,
         RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, _______, _______, _______, _______,  _______,  _______,          _______,
         _______, RGB_RMOD,RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, _______, _______, _______, _______,            _______,          _______,
         _______,          _______, _______, _______, _______, _______, NK_TOGG, _______, _______, _______, _______,            _______, _______,
-        _______,  _______, _______,                            _______,                            _______, _______,  _______,  _______, _______, _______)
+        _______, _______, _______,                            _______,                            _______, KC_TRNS,  KC_TRNS,  _______, _______, _______)
 };
 
 #if defined(ENCODER_MAP_ENABLE)
@@ -50,4 +50,3 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [WIN_MM]   = { ENCODER_CCW_CW(ENC_LFT, ENC_RGT) },
 };
 #endif
-
