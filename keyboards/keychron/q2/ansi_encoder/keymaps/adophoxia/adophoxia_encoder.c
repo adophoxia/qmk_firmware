@@ -50,16 +50,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 switch(get_highest_layer(layer_state)) {
                     case WIN_BASE:
-                        if (r_alt_pressed) {
+                        if (r_alt_pressed) { // If R_Alt is held, Mute
                             tap_code(KC_MUTE);
-                        } else {
+                        } else {    // Else, Play/Pause
                             tap_code(KC_MPLY);
                         }
                         break;
-                    case WIN_FN:
+                    case WIN_FN: //Reset EEPROM
                         soft_reset_keyboard();
                         break;
-                    case WIN_MM:
+                    case WIN_MM: //Enter bootloader; Also resets EEPROM if BOOTMAGIC is enabled
                         reset_keyboard();
                         break;
                     default:
@@ -71,29 +71,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 switch(get_highest_layer(layer_state)) {
                     case WIN_BASE:
-                        if (ctrl_pressed) { // If you are holding R shift, Page up/dn
+                        if (ctrl_pressed) { // If you are holding L Ctrl, Page Dn
                             tap_code(KC_PGDN);
-                        } else if (l_alt_pressed) {  // if holding Left Alt, change media next/prev track
+                        } else if (l_alt_pressed) { // if holding L Alt, Media Prev track
                             tap_code(KC_MPRV);
-                        } else if (r_alt_pressed) {
+                        } else if (r_alt_pressed) { // If holding R Alt, move between words
                             if (tab_pressed) {
-                                tap_code(KC_LEFT);
+                                tap_code16(C(KC_LEFT));
                             }
                         } else {
-                            tap_code16_delay(KC_VOLD, 2);;       // Otherwise it just changes volume
+                            tap_code16_delay(KC_VOLD, 2);   // Otherwise, decrease volume
                         }
                         break;
                     case WIN_MM: //RGB Control
-                        if (l_shift_pressed) { // If you are holding R shift, Page up/dn
+                        if (l_shift_pressed) { // If you are holding L Shift, decrease speed
                             rgb_matrix_decrease_speed();
-                        } else if (l_alt_pressed) {  // if holding Left Alt, change media next/prev track
-                            rgb_matrix_step_reverse();
-                        } else if (ctrl_pressed){
-                            rgb_matrix_decrease_hue();
-                        } else if (ctrl_pressed && l_shift_pressed) {
-                            rgb_matrix_decrease_sat();
+                        } else if (l_alt_pressed) { // if holding L Alt, cycle back effect
+                            rgb_matrix_step_reverse_noeeprom();
+                        } else if (ctrl_pressed){   // If holding L Ctrl, decrease hue of effect
+                            rgb_matrix_decrease_hue_noeeprom(); 
+                        } else if (ctrl_pressed && l_shift_pressed) {   //  If holding both, L Ctrl and L Shift, decrease saturation
+                            rgb_matrix_decrease_sat_noeeprom();
                         } else {
-                            rgb_matrix_decrease_val();       // Otherwise it just changes volume
+                            rgb_matrix_decrease_val_noeeprom(); // Otherwise, decrease brightness of effect
                         }
                         break;
                     default:
@@ -105,27 +105,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 switch(get_highest_layer(layer_state)) {
                     case WIN_BASE: //Default Layer
-                        if (ctrl_pressed) { // If you are holding R shift, Page up/dn
+                        if (ctrl_pressed) { // If you are holding L Ctrl, Page Up
                             tap_code(KC_PGUP);
-                        } else if (l_alt_pressed) {  // if holding Left Alt, change media next/prev track
+                        } else if (l_alt_pressed) {  // if holding L Alt, Media Next track
                             tap_code(KC_MNXT);
-                        } else if (r_alt_pressed && tab_pressed) {
-                            tap_code(KC_RGHT);
+                        } else if (r_alt_pressed) { // If holding R Alt, move between words
+                            tap_code16(C(KC_RIGHT));
                         } else {
-                            tap_code16_delay(KC_VOLU, 2);;       // Otherwise it just changes volume
+                            tap_code16_delay(KC_VOLU, 2);   // Otherwise, increase volume
                         }
                         break;
                     case WIN_MM: //RGB Control
-                        if (l_shift_pressed) { // If you are holding R shift, Page up/dn
-                            rgb_matrix_increase_speed();
-                        } else if (l_alt_pressed) {  // if holding Left Alt, change media next/prev track
-                            rgb_matrix_step();
-                        } else if (ctrl_pressed){
-                            rgb_matrix_increase_hue();
-                        } else if (ctrl_pressed && l_shift_pressed) {
-                            rgb_matrix_increase_sat();
+                        if (l_shift_pressed) { // If you are holding L Shift, increase speed
+                            rgb_matrix_increase_speed_noeeprom();
+                        } else if (l_alt_pressed) {  // if holding L Alt, cycle forward effect
+                            rgb_matrix_step_noeeprom();
+                        } else if (ctrl_pressed){   // If holding L Ctrl, increase hue of effect
+                            rgb_matrix_increase_hue_noeeprom();
+                        } else if (ctrl_pressed && l_shift_pressed) {   //  If holding both, L Ctrl and L Shift, decrease saturation
+                            rgb_matrix_increase_sat_noeeprom();
                         } else {
-                            rgb_matrix_increase_val();       // Otherwise it just changes volume
+                            rgb_matrix_increase_val_noeeprom(); // Otherwise, decrease brightness of effect
                         }
                         break;
                     default:
