@@ -1,4 +1,4 @@
-/* Copyright 2022 @Adophoxia
+/* Copyright 2023 @Adophoxia
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 #include "indicators.h"
+#include "lib/lib8tion/lib8tion.h"
 
 #define ARRAYSIZE(arr) sizeof(arr)/sizeof(arr[0])
 
@@ -34,9 +35,6 @@ uint8_t alphas[] = {
 uint8_t multimedia_f_row[] = {
     1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,
 };
-
-// un-used, at least on the code provided
-#include "lib/lib8tion/lib8tion.h"
 
 void breathing_win_lock(){
     HSV      hsv  = {HSV_RED};
