@@ -90,8 +90,6 @@ bool mediatrack_navpage_indicators(void) {
     return false;
 }
 
-
-
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t layer = get_highest_layer(layer_state);
     if (layer > 0) {

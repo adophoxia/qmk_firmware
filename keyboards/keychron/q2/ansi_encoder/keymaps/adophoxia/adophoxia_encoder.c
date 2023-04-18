@@ -47,9 +47,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-
-
-
         case ENC_LFT:
             if (record->event.pressed) {
                 switch(get_highest_layer(layer_state)) {
@@ -84,10 +81,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-
-
-
-
         case ENC_RGT:
             if (record->event.pressed) {
                 switch(get_highest_layer(layer_state)) {
