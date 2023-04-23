@@ -19,10 +19,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "adophoxia.h"
 
 bool tab_pressed = false; // ADD this near the beginning of keymap.c
+bool ctrl_pressed = false;
+bool l_shift_pressed = false;
+bool r_shift_pressed = false;
+bool l_alt_pressed = false;
+bool r_alt_pressed = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    uint8_t mods_state = get_mods() | get_weak_mods();
+    //uint8_t mods_state = get_mods() | get_weak_mods();
     switch (keycode) {
+        case KC_LCTL:
+            ctrl_pressed = record->event.pressed;
+            break;
+        case KC_LSFT:
+            l_shift_pressed = record->event.pressed;
+            break;
+        case KC_RSFT:
+            r_shift_pressed = record->event.pressed;
+            break;
+        case KC_LALT:
+            l_alt_pressed = record->event.pressed;
+            break;
+        case KC_RALT:
+            r_alt_pressed = record->event.pressed;
+            break;
         case KC_TAB:
             tab_pressed = record->event.pressed;
             break;
@@ -30,7 +50,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 switch(get_highest_layer(layer_state)) {
                     case WIN_BASE:
-                        if (mods_state && MOD_BIT(KC_RALT)) { // If R_Alt is held, Mute
+                        if (r_alt_pressed) { // If R_Alt is held, Mute
                             tap_code(KC_MUTE);
                         } else {    // Else, Play/Pause
                             tap_code(KC_MPLY);
@@ -51,11 +71,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 switch(get_highest_layer(layer_state)) {
                     case WIN_BASE:
-                        if (mods_state && MOD_BIT(KC_LCTL)) { // If you are holding L Ctrl, Page Dn
+                        if (ctrl_pressed) { // If you are holding L Ctrl, Page Dn
                             tap_code(KC_PGDN);
-                        } else if (mods_state && MOD_BIT(KC_LALT)) { // if holding L Alt, Media Prev track
+                        } else if (l_alt_pressed) { // if holding L Alt, Media Prev track
                             tap_code(KC_MPRV);
-                        } else if (mods_state && MOD_BIT(KC_RALT)) { // If holding R Alt, move between words
+                        } else if (r_alt_pressed) { // If holding R Alt, move between words
                             if (tab_pressed) {
                                 tap_code16(C(KC_LEFT));
                             }
@@ -64,13 +84,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         }
                         break;
                     case WIN_MM: //RGB Control
-                        if (mods_state && MOD_BIT(KC_LSFT)) { // If you are holding L Shift, decrease speed
+                        if (l_shift_pressed) { // If you are holding L Shift, decrease speed
                             rgb_matrix_decrease_speed();
-                        } else if (mods_state && MOD_BIT(KC_LALT)) { // if holding L Alt, cycle back effect
+                        } else if (l_alt_pressed) { // if holding L Alt, cycle back effect
                             rgb_matrix_step_reverse_noeeprom();
-                        } else if (mods_state && MOD_BIT(KC_LCTL)){   // If holding L Ctrl, decrease hue of effect
+                        } else if (ctrl_pressed){   // If holding L Ctrl, decrease hue of effect
                             rgb_matrix_decrease_hue_noeeprom(); 
-                        } else if (mods_state && MOD_BIT(KC_LCTL) && mods_state && MOD_BIT(KC_LSFT)) {   //  If holding both, L Ctrl and L Shift, decrease saturation
+                        } else if (ctrl_pressed && l_shift_pressed) {   //  If holding both, L Ctrl and L Shift, decrease saturation
                             rgb_matrix_decrease_sat_noeeprom();
                         } else {
                             rgb_matrix_decrease_val_noeeprom(); // Otherwise, decrease brightness of effect
@@ -85,24 +105,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 switch(get_highest_layer(layer_state)) {
                     case WIN_BASE: //Default Layer
-                        if (mods_state && MOD_BIT(KC_LCTL)) { // If you are holding L Ctrl, Page Up
+                        if (ctrl_pressed) { // If you are holding L Ctrl, Page Up
                             tap_code(KC_PGUP);
-                        } else if (mods_state && MOD_BIT(KC_LALT)) {  // if holding L Alt, Media Next track
+                        } else if (l_alt_pressed) {  // if holding L Alt, Media Next track
                             tap_code(KC_MNXT);
-                        } else if (mods_state && MOD_BIT(KC_RALT)) { // If holding R Alt, move between words
+                        } else if (r_alt_pressed) { // If holding R Alt, move between words
                             tap_code16(C(KC_RIGHT));
                         } else {
                             tap_code16_delay(KC_VOLU, 2);   // Otherwise, increase volume
                         }
                         break;
                     case WIN_MM: //RGB Control
-                        if (mods_state && MOD_BIT(KC_LSFT)) { // If you are holding L Shift, increase speed
+                        if (l_shift_pressed) { // If you are holding L Shift, increase speed
                             rgb_matrix_increase_speed_noeeprom();
-                        } else if (mods_state && MOD_BIT(KC_LALT)) {  // if holding L Alt, cycle forward effect
+                        } else if (l_alt_pressed) {  // if holding L Alt, cycle forward effect
                             rgb_matrix_step_noeeprom();
-                        } else if (mods_state && MOD_BIT(KC_LCTL)){   // If holding L Ctrl, increase hue of effect
+                        } else if (ctrl_pressed){   // If holding L Ctrl, increase hue of effect
                             rgb_matrix_increase_hue_noeeprom();
-                        } else if (mods_state && MOD_BIT(KC_LCTL) && mods_state && MOD_BIT(KC_LSFT)) {   //  If holding both, L Ctrl and L Shift, decrease saturation
+                        } else if (ctrl_pressed && l_shift_pressed) {   //  If holding both, L Ctrl and L Shift, decrease saturation
                             rgb_matrix_increase_sat_noeeprom();
                         } else {
                             rgb_matrix_increase_val_noeeprom(); // Otherwise, decrease brightness of effect
