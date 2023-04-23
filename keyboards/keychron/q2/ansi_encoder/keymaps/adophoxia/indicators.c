@@ -36,6 +36,27 @@ uint8_t multimedia_f_row[] = {
     1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,
 };
 
+void f_row_leds() {
+    for (uint8_t i = 0; i < ARRAYSIZE(multimedia_f_row); i++) {
+        rgb_matrix_set_color(multimedia_f_row[0], RGB_RED);
+        rgb_matrix_set_color(multimedia_f_row[1], RGB_RED);
+
+        rgb_matrix_set_color(multimedia_f_row[2], RGB_ORANGE);
+        rgb_matrix_set_color(multimedia_f_row[3], RGB_ORANGE);
+
+        rgb_matrix_set_color(multimedia_f_row[4], RGB_YELLOW);
+        rgb_matrix_set_color(multimedia_f_row[5], RGB_YELLOW);
+
+        rgb_matrix_set_color(multimedia_f_row[6], RGB_GREEN);
+        rgb_matrix_set_color(multimedia_f_row[7], RGB_GREEN);
+        rgb_matrix_set_color(multimedia_f_row[8], RGB_GREEN);
+
+        rgb_matrix_set_color(multimedia_f_row[9], RGB_BLUE);
+        rgb_matrix_set_color(multimedia_f_row[10], RGB_BLUE);
+        rgb_matrix_set_color(multimedia_f_row[11], RGB_BLUE);
+    }
+}
+
 void breathing_win_lock(){
     HSV      hsv  = {HSV_RED};
     uint16_t time = scale16by8(g_rgb_timer, rgb_matrix_config.speed / 8);
@@ -102,6 +123,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 keycode > KC_TRNS) {
                     switch(get_highest_layer(layer_state|default_layer_state)) {
                         case WIN_MM:
+                            f_row_leds();
                             rgb_matrix_set_color(index, RGB_BLUE);
                             break;
                         case WIN_FN:

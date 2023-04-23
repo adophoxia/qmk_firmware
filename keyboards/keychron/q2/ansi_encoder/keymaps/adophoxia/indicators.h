@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 void breathing_win_lock(void);
 void shift_indicators(void);
 void breathing_caps_lock(void);
+void f_row_leds(void);
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max);
 bool mediatrack_navpage_indicators(void);
