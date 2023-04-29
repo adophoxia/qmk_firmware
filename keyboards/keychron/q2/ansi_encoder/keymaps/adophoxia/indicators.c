@@ -57,29 +57,6 @@ void f_row_leds() {
     }
 }
 
-void breathing_win_lock(){
-    HSV      hsv  = {HSV_RED};
-    uint16_t time = scale16by8(g_rgb_timer, rgb_matrix_config.speed / 8);
-    hsv.v         = scale8(abs8(sin8(time) - 128) * 2, hsv.v);
-    RGB rgb       = hsv_to_rgb(hsv);
-    if (keymap_config.no_gui){ // Sets a breathing LED effect on Win Key
-        rgb_matrix_set_color(58, rgb.r, rgb.g, rgb.b);
-    }
-};
-
-void breathing_caps_lock(){
-    HSV      hsv  = {HSV_WHITE};
-    uint16_t time = scale16by8(g_rgb_timer, rgb_matrix_config.speed / 8);
-    hsv.v         = scale8(abs8(sin8(time) - 128) * 2, hsv.v);
-    RGB rgb       = hsv_to_rgb(hsv);
-    if (host_keyboard_led_state().caps_lock) { // Sets a breathing LED effect on caps locks and KC_A - KC_Z
-        for (uint8_t i = 0; i < ARRAYSIZE(alphabets); i++){
-            rgb_matrix_set_color(alphabets[i], rgb.r, rgb.g, rgb.b);
-        } 
-        rgb_matrix_set_color(30, RGB_WHITE);
-    }
-};
-
 // Lights up certain areas of the keyboard when L_SFT/R_SFT is held
 void shift_indicators(){
     if (get_mods() & MOD_BIT(KC_LSFT)){
@@ -107,6 +84,27 @@ bool mediatrack_navpage_indicators(void) {
     } else if (get_mods() & MOD_BIT(KC_LSFT)) {
         rgb_matrix_set_color(56, RGB_RED);
         rgb_matrix_set_color(65, RGB_RED);
+    }
+    return false;
+}
+
+static inline RGB hsv_to_rgb_glow(HSV hsv) {
+    hsv.v = scale8(abs8(sin8(scale16by8(g_rgb_timer, rgb_matrix_config.speed / 8)) - 128) * 2, hsv.v);
+    return hsv_to_rgb(hsv);
+}
+
+bool rgb_matrix_indicators_user(void) {
+    if (keymap_config.no_gui){ // Sets a breathing LED effect on Win Key
+        RGB const rgb = hsv_to_rgb_glow((HSV){HSV_RED});
+        rgb_matrix_set_color(58, rgb.r, rgb.g, rgb.b);
+    }
+
+    if (host_keyboard_led_state().caps_lock) { // Sets a breathing LED effect on caps locks and KC_A - KC_Z
+        RGB const rgb = hsv_to_rgb_glow((HSV){HSV_WHITE});
+        for (uint8_t i = 0; i < ARRAYSIZE(alphabets); i++){
+            rgb_matrix_set_color(alphabets[i], rgb.r, rgb.g, rgb.b);
+        } 
+        rgb_matrix_set_color(30, RGB_WHITE);
     }
     return false;
 }
@@ -140,9 +138,8 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         }
     }
     if (layer == WIN_BASE){ // Checks if layers are either `MAC_BASE` or `WIN_BASE`
-        breathing_caps_lock();
+        rgb_matrix_indicators_user();
         shift_indicators();
-        breathing_win_lock();
     }
     mediatrack_navpage_indicators();
     return false;
