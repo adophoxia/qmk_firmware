@@ -136,6 +136,15 @@
                     "type": "string",
                     "enum": ["pwm", "software", "timer", "custom"]
                 },
+                "default": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "on": {"type": "boolean"},
+                        "breathing": {"type": "boolean"},
+                        "brightness": {"$ref": "qmk.definitions.v1#/unsigned_int_8"}
+                    }
+                },
                 "breathing": {"type": "boolean"},
                 "breathing_period": {"$ref": "qmk.definitions.v1#/unsigned_int_8"},
                 "levels": {
@@ -339,6 +348,7 @@
                             "additionalProperties": false,
                             "required": ["x", "y"],
                             "properties": {
+                                "encoder": {"$ref": "qmk.definitions.v1#/unsigned_int"},
                                 "label": {
                                     "type": "string",
                                     "pattern": "^[^\\n]*$"
@@ -418,6 +428,16 @@
                         "type": "boolean"
                     }
                 },
+                "default": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "on": {"type": "boolean"},
+                        "animation": {"type": "string"},
+                        "val": {"$ref": "qmk.definitions.v1#/unsigned_int_8"},
+                        "speed": {"$ref": "qmk.definitions.v1#/unsigned_int_8"}
+                    }
+                },
                 "driver": {"type": "string"},
                 "center_point": {
                     "type": "array",
@@ -470,6 +490,18 @@
                     "propertyNames": { "$ref": "qmk.definitions.v1#/snake_case" }
                     "additionalProperties": {
                         "type": "boolean"
+                    }
+                },
+                "default": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "on": {"type": "boolean"},
+                        "animation": {"type": "string"},
+                        "hue": {"$ref": "qmk.definitions.v1#/unsigned_int_8"},
+                        "sat": {"$ref": "qmk.definitions.v1#/unsigned_int_8"},
+                        "val": {"$ref": "qmk.definitions.v1#/unsigned_int_8"},
+                        "speed": {"$ref": "qmk.definitions.v1#/unsigned_int_8"}
                     }
                 },
                 "driver": {"type": "string"},
@@ -530,6 +562,18 @@
                     }
                 },
                 "brightness_steps": {"$ref": "qmk.definitions.v1#/unsigned_int"},
+                "default": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "on": {"type": "boolean"},
+                        "animation": {"type": "string"},
+                        "hue": {"$ref": "qmk.definitions.v1#/unsigned_int_8"},
+                        "sat": {"$ref": "qmk.definitions.v1#/unsigned_int_8"},
+                        "val": {"$ref": "qmk.definitions.v1#/unsigned_int_8"},
+                        "speed": {"$ref": "qmk.definitions.v1#/unsigned_int_8"}
+                    }
+                },
                 "driver": {
                     "type": "string",
                     "enum": ["apa102", "custom", "ws2812"]
@@ -640,10 +684,6 @@
                         }
                     }
                 },
-                "matrix_grid": {
-                    "type": "array",
-                    "items": {"$ref": "qmk.definitions.v1#/mcu_pin"}
-                },
                 "matrix_pins": {
                     "type": "object",
                     "additionalProperties": false,
@@ -678,6 +718,18 @@
                     "properties": {
                         "right": {
                             "$ref": "#/definitions/encoder_config"
+                        }
+                    }
+                },
+                "handedness": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "pin": {"$ref": "qmk.definitions.v1#/mcu_pin"},
+                        "matrix_grid": {
+                            "$ref": "qmk.definitions.v1#/mcu_pin_array",
+                            "minItems": 2,
+                            "maxItems": 2
                         }
                     }
                 },
@@ -736,6 +788,11 @@
                     "type": "string",
                     "enum": ["eeprom", "left", "matrix_grid", "pin", "right"],
                     "$comment": "Deprecated: use config.h options for now"
+                },
+                "matrix_grid": {
+                    "type": "array",
+                    "items": {"$ref": "qmk.definitions.v1#/mcu_pin"},
+                    "$comment": "Deprecated: use split.handedness.matrix_grid instead"
                 }
             }
         },
