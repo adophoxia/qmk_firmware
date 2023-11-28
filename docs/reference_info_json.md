@@ -134,6 +134,16 @@ Configures the [Backlight](feature_backlight.md) feature.
     * `breathing_period`
         * The length of one backlight breathing cycle in seconds.
         * Default: `6` (6 seconds)
+    * `default`
+        * `on`
+            * The default backlight enabled state.
+            * Default: `true`
+        * `breathing`
+            * The default backlight breathing state.
+            * Default: `false`
+        * `brightness`
+            * The default brightness level.
+            * Default: `max_brightness`
     * `driver`
         * The driver to use. Must be one of `custom`, `pwm`, `software`, `timer`.
         * Default: `"pwm"`
@@ -314,6 +324,8 @@ The ISO enter key is represented by a 1.25u×2uh key. Renderers which utilize in
                 * `w`
                     * The width of the key, in key units.
                     * Default: `1` (1u)
+                * `encoder`
+                    * The index of an encoder this key should be linked to
                 * Example: `{"label": "Shift", "matrix": [4, 0], "x": 0, "y": 4.25, "w": 2.25}`
 
 ## Leader Key :id=leader-key
@@ -341,7 +353,7 @@ Configures the [LED Matrix](feature_led_matrix.md) feature.
         * Example:
         ```json
         {
-            "alpha_mods": true,
+            "alphas_mods": true,
             "breathing": true,
             "cycle_left_right": false
         }
@@ -349,6 +361,19 @@ Configures the [LED Matrix](feature_led_matrix.md) feature.
     * `center_point`
         * The centroid (geometric center) of the LEDs. Used for certain effects.
         * Default: `[112, 32]`
+    * `default`
+        * `animation`
+            * The default effect. Must be one of `led_matrix.animations`
+            * Default: `"solid"`
+        * `on`
+            * The default enabled state.
+            * Default: `true`
+        * `val`
+            * The default brightness level.
+            * Default: `max_brightness`
+        * `speed`
+            * The default animation speed.
+            * Default: `128`
     * `driver` (Required)
         * The driver to use. Must be one of `custom`, `is31fl3218`, `is31fl3731`, `is31fl3733`, `is31fl3736`, `is31fl3737`, `is31fl3741`, `is31fl3742a`, `is31fl3743a`, `is31fl3745`, `is31fl3746a`, `snled27351`.
     * `layout` (Required)
@@ -506,6 +531,25 @@ Configures the [RGB Lighting](feature_rgblight.md) feature.
     * `brightness_steps`
         * The number of brightness adjustment steps.
         * Default: `17`
+    * `default`
+        * `animation`
+            * The default effect. Must be one of `rgblight.animations`
+            * Default: `"static_light"`
+        * `on`
+            * The default enabled state.
+            * Default: `true`
+        * `hue`
+            * The default hue value.
+            * Default: `0`
+        * `sat`
+            * The default saturation value.
+            * Default: `255`
+        * `val`
+            * The default brightness level.
+            * Default: `max_brightness`
+        * `speed`
+            * The default animation speed.
+            * Default: `0`
     * `driver`
         * The driver to use. Must be one of `apa102`, `custom`, `ws2812`.
         * Default: `"ws2812"`
@@ -554,7 +598,7 @@ Configures the [RGB Matrix](feature_rgb_matrix.md) feature.
         * Example:
         ```json
         {
-            "alpha_mods": true,
+            "alphas_mods": true,
             "breathing": true,
             "cycle_left_right": false
         }
@@ -562,6 +606,25 @@ Configures the [RGB Matrix](feature_rgb_matrix.md) feature.
     * `center_point`
         * The centroid (geometric center) of the LEDs. Used for certain effects.
         * Default: `[112, 32]`
+    * `default`
+        * `animation`
+            * The default effect. Must be one of `rgb_matrix.animations`
+            * Default: `"solid_color"`
+        * `on`
+            * The default enabled state.
+            * Default: `true`
+        * `hue`
+            * The default hue value.
+            * Default: `0`
+        * `sat`
+            * The default saturation value.
+            * Default: `255`
+        * `val`
+            * The default brightness level.
+            * Default: `max_brightness`
+        * `speed`
+            * The default animation speed.
+            * Default: `128`
     * `driver` (Required)
         * The driver to use. Must be one of `aw20216s`, `custom`, `is31fl3218`, `is31fl3731`, `is31fl3733`, `is31fl3736`, `is31fl3737`, `is31fl3741`, `is31fl3742a`, `is31fl3743a`, `is31fl3745`, `is31fl3746a`, `snled27351`, `ws2812`.
     * `hue_steps`
@@ -647,6 +710,12 @@ Configures the [Split Keyboard](feature_split_keyboard.md) feature.
         * `right`
             * `rotary`
                 * See [Encoder](#encoder) config.
+    * `handedness`
+        * `pin`
+            * The GPIO pin connected to determine handedness.
+        * `matrix_grid`
+            * The GPIO pins of the matrix position which determines the handedness.
+            * Example: `["A1", "B5"]`
     * `matrix_pins`
         * `right`
             * See [Matrix](#matrix) config.
