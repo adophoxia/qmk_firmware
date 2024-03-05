@@ -71,8 +71,9 @@ static uint8_t encoder_resolutions[NUM_ENCODERS] = ENCODER_RESOLUTIONS;
 #endif
 static int8_t encoder_LUT[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
 
-static uint8_t encoder_state[NUM_ENCODERS]  = {0};
-static int8_t  encoder_pulses[NUM_ENCODERS] = {0};
+static uint8_t encoder_state[NUM_ENCODERS]            = {0};
+static int8_t  encoder_pulses[NUM_ENCODERS]           = {0};
+static bool    encoder_interrupt_update[NUM_ENCODERS] = {false};
 
 // encoder counts
 static uint8_t thisCount;
@@ -199,11 +200,18 @@ static void encoder_handle_state_change(uint8_t index, uint8_t state) {
 
 void encoder_quadrature_handle_read(uint8_t index, uint8_t pin_a_state, uint8_t pin_b_state) {
     uint8_t state = pin_a_state | (pin_b_state << 1);
-    if ((encoder_state[index] & 0x3) != state) {
+    if ((encoder_state[index] & 0x3) != state || encoder_interrupt_update[index]) {
         encoder_state[index] <<= 2;
         encoder_state[index] |= state;
         encoder_handle_state_change(index, encoder_state[index]);
     }
+}
+
+void encoder_interrupt_read(uint8_t index) {
+    encoder_state[index] <<= 2;
+    encoder_state[index] |= (readPin(encoders_pad_a[index]) << 0) | (readPin(encoders_pad_b[index]) << 1);
+    encoder_pulses[index] += encoder_LUT[encoder_state[index] & 0xF];
+    encoder_interrupt_update[index] = true;
 }
 
 __attribute__((weak)) void encoder_driver_task(void) {

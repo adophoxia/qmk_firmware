@@ -50,10 +50,6 @@ static bool encoder_handle_queue(void) {
     }
     return changed;
 }
-
-static uint8_t encoder_state[NUM_ENCODERS]            = {0};
-static int8_t  encoder_pulses[NUM_ENCODERS]           = {0};
-static bool    encoder_interrupt_update[NUM_ENCODERS] = {false};
 bool encoder_task(void) {
     bool changed = false;
 
