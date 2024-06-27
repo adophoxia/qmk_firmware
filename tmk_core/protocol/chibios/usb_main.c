@@ -363,30 +363,7 @@ void init_usb_driver(USBDriver *usbp) {
     usbConnectBus(usbp);
 }
 
-__attribute__((weak)) void restart_usb_driver(USBDriver *usbp) {
-    usbDisconnectBus(usbp);
-    usbStop(usbp);
-
-    for (int i = 0; i < USB_ENDPOINT_IN_COUNT; i++) {
-        usb_endpoint_in_stop(&usb_endpoints_in[i]);
-    }
-
-    for (int i = 0; i < USB_ENDPOINT_OUT_COUNT; i++) {
-        usb_endpoint_out_stop(&usb_endpoints_out[i]);
-    }
-
-    wait_ms(50);
-
-    for (int i = 0; i < USB_ENDPOINT_IN_COUNT; i++) {
-        usb_endpoint_in_init(&usb_endpoints_in[i]);
-        usb_endpoint_in_start(&usb_endpoints_in[i]);
-    }
-
-    for (int i = 0; i < USB_ENDPOINT_OUT_COUNT; i++) {
-        usb_endpoint_out_init(&usb_endpoints_out[i]);
-        usb_endpoint_out_start(&usb_endpoints_out[i]);
-    }
-
+__attribute__((weak)) void usb_start(USBDriver *usbp) {
     usbStart(usbp, &usbcfg);
     usbConnectBus(usbp);
 }

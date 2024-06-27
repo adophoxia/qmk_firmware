@@ -135,6 +135,10 @@ void host_system_send(uint16_t usage) {
 
     if (!driver) return;
 
+    static report_extra_t report;
+    report.report_id = REPORT_ID_SYSTEM;
+    report.usage     = usage;
+
     report_extra_t report = {
         .report_id = REPORT_ID_SYSTEM,
         .usage     = usage,
@@ -154,6 +158,10 @@ void host_consumer_send(uint16_t usage) {
 #endif
 
     if (!driver) return;
+
+    static report_extra_t report;
+    report.report_id = REPORT_ID_CONSUMER;
+    report.usage     = usage;
 
     report_extra_t report = {
         .report_id = REPORT_ID_CONSUMER,
