@@ -1,9 +1,8 @@
 
-# M1W QMK
+# M1W VIA
 
 * Keyboard Maintainer: [Priyadie](https://github.com/priyadie)
-* Hardware Supported: *The PCBs, controllers supported*
-* Hardware Availability: *Links to where you can find this hardware*
+* Hardware Availability: [M1W VIA](https://www.monsgeek.com/product/m1w-via)
 
 Make example for this keyboard (after setting up your build environment):
 
