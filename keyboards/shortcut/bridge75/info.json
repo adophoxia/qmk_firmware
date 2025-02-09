@@ -1,0 +1,93 @@
+{
+    "manufacturer": " ",
+    "maintainer": "JonyLee@HFD",
+    "url": "",
+    "processor": "WB32FQ95",
+    "bootloader": "wb32-dfu",
+    "bootmagic": {
+        "matrix": [0, 0]
+    },
+    "usb": {
+        "vid": "0x0094",
+        "force_nkro": true,
+        "suspend_wakeup_delay": 1000
+    },
+    "diode_direction": "ROW2COL",
+    "eeprom": {
+        "driver": "wear_leveling",
+        "wear_leveling": {
+            "backing_size": 4096,
+            "driver": "spi_flash"
+        }
+    },
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "rgb_matrix": true,
+        "deferred_exec": true
+    },
+    "keycodes": [
+        {
+            "key": "KC_USB"
+        },
+        {
+            "key": "KC_BT1"
+        },
+        {
+            "key": "KC_BT2"
+        },
+        {
+            "key": "KC_BT3"
+        },
+        {
+            "key": "KC_BT4"
+        },
+        {
+            "key": "KC_BT5"
+        },
+        {
+            "key": "KC_2G4"
+        },
+        {
+            "key": "KC_BATQ"
+        }
+    ],
+    "matrix_pins": {
+        "cols": ["C1", "C2", "C3", "A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7", "C4", "C5", "B0", "B1"],
+        "rows": ["B15", "C6", "C7", "C8", "C9", "B14"]
+    },
+    "rgb_matrix": {
+        "driver": "ws2812",
+        "val_steps": 20,
+        "speed_steps": 35,
+        "animations": {
+            "solid_color": true,
+            "breathing": true,
+            "cycle_all": true,
+            "cycle_left_right": true,
+            "cycle_up_down": true,
+            "cycle_out_in": true,
+            "cycle_out_in_dual": true,
+            "rainbow_moving_chevron": true,
+            "cycle_pinwheel": true,
+            "cycle_spiral": true,
+            "dual_beacon": true,
+            "rainbow_beacon": true,
+            "raindrops": true,
+            "typing_heatmap": true,
+            "solid_reactive_simple": true,
+            "solid_reactive": true,
+            "multisplash": true
+        },
+        "max_brightness": 100,
+        "sleep": false,
+        "timeout": 60000
+    },
+    "ws2812": {
+        "pin": "B10"
+    }
+}
