@@ -12,8 +12,8 @@
 #define USB_POWER_EN_PIN A14
 #define LED_POWER_EN_PIN B7
 
-#  define BT_CABLE_PIN B8 // 充电接入时为高
-#  define BT_CHARGE_PIN B9 // 充电时为低，充满时为高
+#  define BT_CABLE_PIN B8 // High when charging connected
+#  define BT_CHARGE_PIN B9 // Low when charging, high when fully charged
 
 /* UART */
 #define UART_TX_PIN A9
@@ -27,12 +27,8 @@
 #define SPI_MOSI_PAL_MODE 5
 
 #define EXTERNAL_FLASH_SPI_SLAVE_SELECT_PIN C12
-#define WEAR_LEVELING_LOGICAL_SIZE (WEAR_LEVELING_BACKING_SIZE / 2)
 
-#define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#define RGB_MATRIX_KEYPRESSES
-
-#define WS2812_TIMING 1250  // 总的位长度（TH+TL）纳秒
-#define WS2812_T1H 900       // “1”位的高相位长度纳秒
-#define WS2812_T0H 350       // “0”位的高相位长度纳秒
-#define WS2812_TRST_US 280   // 重置阶段的长度微秒
+#define WS2812_TIMING 1250 // Total bit length (TH+TL) in nanoseconds
+#define WS2812_T1H 900 // High phase length of "1" bit in nanoseconds
+#define WS2812_T0H 350 // High phase length of "0" bit in nanoseconds
+#define WS2812_TRST_US 280 // Length of reset phase in microseconds
